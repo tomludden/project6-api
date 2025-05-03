@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
-const Artist = require('../models/artists') // Adjust path
-const Album = require('../models/albums') // Adjust path
+const Artist = require('../models/artists')
+const Album = require('../models/albums')
 
 const seedData = async () => {
   try {
@@ -9,10 +9,8 @@ const seedData = async () => {
       useUnifiedTopology: true
     })
 
-    // Fetch artists from DB
     const artists = await Artist.find()
 
-    // Example albums with artist names for linking
     const albums = [
       {
         album: 'Future Nostalgia',
@@ -44,7 +42,6 @@ const seedData = async () => {
       }
     ]
 
-    // Insert albums and assign them to the correct artist
     for (let album of albums) {
       const artistDoc = await Artist.findOne({ artist: album.artistName })
       if (artistDoc) {

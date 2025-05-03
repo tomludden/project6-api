@@ -14,7 +14,7 @@ Technologies used **Node.js**, **Dotenv**, **Mongoose**, **Express**, and **Mong
 
 ### _1 -- Clone the repository_
 
-git clone https://github.com/tomludden/project-6.git
+git clone https://github.com/tomludden/project6-api.git
 
 ### _2 -- Start the server_
 

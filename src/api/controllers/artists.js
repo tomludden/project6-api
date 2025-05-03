@@ -1,4 +1,4 @@
-const Artist = require('../models/artists') // Adjust path accordingly
+const Artist = require('../models/artists')
 
 const getArtists = async (req, res, next) => {
   try {

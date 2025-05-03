@@ -1,4 +1,4 @@
-const Album = require('../models/albums') // Adjust path accordingly
+const Album = require('../models/albums')
 
 const getAlbums = async (req, res, next) => {
   try {
