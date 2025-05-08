@@ -5,7 +5,7 @@ const getAlbums = async (req, res, next) => {
     const albums = await Album.find()
     return res.status(200).json(albums)
   } catch (error) {
-    return res.status(400).json({ error: error.message })
+    return res.status(400).json({ message: 'Albums not found' })
   }
 }
 
@@ -15,7 +15,7 @@ const getAlbum = async (req, res, next) => {
     const album = await Album.findById(id)
     return res.status(200).json(album)
   } catch (error) {
-    return res.status(400).json({ error: error.message })
+    return res.status(400).json({ message: 'Album not found' })
   }
 }
 
@@ -25,7 +25,7 @@ const postAlbum = async (req, res, next) => {
     const albumSaved = await newAlbum.save()
     return res.status(201).json(albumSaved)
   } catch (error) {
-    return res.status(400).json({ error: error.message })
+    return res.status(400).json({ message: 'Album not saved,already exists' })
   }
 }
 
@@ -41,7 +41,7 @@ const updateAlbum = async (req, res, next) => {
 
     return res.status(200).json(albumUpdated)
   } catch (error) {
-    return res.status(400).json({ error: error.message })
+    return res.status(400).json({ message: 'Album not updated' })
   }
 }
 
@@ -49,9 +49,9 @@ const deleteAlbum = async (req, res, next) => {
   try {
     const { id } = req.params
     const albumDeleted = await Album.findByIdAndDelete(id)
-    return res.status(200).json({ message: 'Album eliminado' })
+    return res.status(200).json(albumDeleted)
   } catch (error) {
-    return res.status(400).json({ error: error.message })
+    return res.status(400).json({ message: 'Album not deleted' })
   }
 }
 

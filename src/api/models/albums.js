@@ -23,10 +23,15 @@ const albumSchema = new mongoose.Schema(
         ]
       }
     ]
+    /* artist: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Artist',
+      required: true
+    } */
   },
   { timestamps: true }
 )
 
-const Album = mongoose.model('albums', albumSchema, 'albums')
+const Album = mongoose.model('Album', albumSchema, 'albums')
 
 module.exports = Album

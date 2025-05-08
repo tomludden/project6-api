@@ -46,5 +46,7 @@ GET /api/v1/albums/:id/artist -- Get artist for a specific album
 
 ### Seeds (npm run)
 
+Run in order artistSeed first, then albumSeed.
+
 **"artistSeed"**: "node ./src/utils/seeds/artistSeed.js",\
 **"albumSeed"**: "node ./src/utils/seeds/albumSeed.js"
