@@ -4,6 +4,11 @@ const albumSchema = new mongoose.Schema(
   {
     album: { type: String, required: true },
     img: { type: String, required: true },
+    artist: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Artist',
+      required: true
+    },
     year: { type: Number, required: true },
     category: [
       {
@@ -23,14 +28,10 @@ const albumSchema = new mongoose.Schema(
         ]
       }
     ]
-    /* artist: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Artist',
-      required: true
-    } */
   },
   { timestamps: true }
 )
+albumSchema.index({ album: 1, artist: 1 }, { unique: true })
 
 const Album = mongoose.model('Album', albumSchema, 'albums')
 

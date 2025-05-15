@@ -1,4 +1,5 @@
 const Album = require('../models/albums')
+const Artist = require('../models/artists')
 
 const getAlbums = async (req, res, next) => {
   try {
@@ -21,11 +22,43 @@ const getAlbum = async (req, res, next) => {
 
 const postAlbum = async (req, res, next) => {
   try {
-    const newAlbum = new Album(req.body)
-    const albumSaved = await newAlbum.save()
-    return res.status(201).json(albumSaved)
+    const { album, img, year, category, artist: artistName } = req.body
+
+    if (!artistName) {
+      return res.status(400).json({ message: 'Artist name is required' })
+    }
+
+    // Find the artist by name (case-insensitive)
+    const foundArtist = await Artist.findOne({
+      artist: { $regex: new RegExp(`^${artistName}$`, 'i') }
+    })
+
+    if (!foundArtist) {
+      return res.status(404).json({ message: 'Artist not found' })
+    }
+
+    // Create the album with the artist's ObjectId
+    const newAlbum = new Album({
+      album,
+      img,
+      year,
+      category,
+      artist: foundArtist._id
+    })
+
+    const savedAlbum = await newAlbum.save()
+
+    // Add the album to the artist's albums array if not already there
+    if (!foundArtist.albums.includes(savedAlbum._id)) {
+      foundArtist.albums.push(savedAlbum._id)
+      await foundArtist.save()
+    }
+
+    return res.status(201).json(savedAlbum)
   } catch (error) {
-    return res.status(400).json({ message: 'Album not saved,already exists' })
+    return res
+      .status(400)
+      .json({ message: 'Album not saved', error: error.message })
   }
 }
 
