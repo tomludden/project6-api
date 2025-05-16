@@ -28,7 +28,6 @@ const postAlbum = async (req, res, next) => {
       return res.status(400).json({ message: 'Artist name is required' })
     }
 
-    // Find the artist by name (case-insensitive)
     const foundArtist = await Artist.findOne({
       artist: { $regex: new RegExp(`^${artistName}$`, 'i') }
     })
@@ -37,7 +36,6 @@ const postAlbum = async (req, res, next) => {
       return res.status(404).json({ message: 'Artist not found' })
     }
 
-    // Create the album with the artist's ObjectId
     const newAlbum = new Album({
       album,
       img,
@@ -48,7 +46,6 @@ const postAlbum = async (req, res, next) => {
 
     const savedAlbum = await newAlbum.save()
 
-    // Add the album to the artist's albums array if not already there
     if (!foundArtist.albums.includes(savedAlbum._id)) {
       foundArtist.albums.push(savedAlbum._id)
       await foundArtist.save()
